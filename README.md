@@ -1,7 +1,10 @@
-# Major Libraries Used
-
+# Dependencies
+- [Python](https://www.python.org/downloads/)
+- [pip](https://pip.pypa.io/en/stable/installation/)
+- [Node.js](https://nodejs.org/en/download/)
 - [React Chessboard](https://www.npmjs.com/package/react-chessboard)
 - [python-chess](https://python-chess.readthedocs.io/en/latest/)
+- Python libraries besides standard as found in /brickfish/backend/requirements.txt
 - torch
 - pandas
 - numpy
