@@ -58,7 +58,7 @@ def legal_moves(id):
     return games[id].legal_moves()
 
 @app.route('/legalMoves/<id>/<piece>', methods=['GET'])
-def legal_moves(id, piece):
+def legal_moves_with_piece(id, piece):
     return games[id].legal_moves(piece)
 
 @app.route('/boardState/<id>', methods=['GET'])
