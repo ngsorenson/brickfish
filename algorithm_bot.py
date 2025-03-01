@@ -30,7 +30,7 @@ class Bot:
             return 0
         return sorted(board.legal_moves, key=move_value, reverse=True)
 
-    def bestMove(self, board, depth, alpha=float('-inf'), beta=float('inf')):
+    def evalMove(self, board, depth, alpha=float('-inf'), beta=float('inf')):
         if depth == 0:
             return self.evaluate_board(board)
 
@@ -44,7 +44,7 @@ class Bot:
 
         for move in self.order_moves(board):
             board.push(move)
-            score = self.bestMove(board, depth - 1, alpha, beta)
+            score = self.evalMove(board, depth - 1, alpha, beta)
             board.pop()
 
             if board.turn == chess.BLACK:  # Minimizing
@@ -64,6 +64,10 @@ class Bot:
                 break
         
         return best_weight
+    
+    def bestMove(self, board):
+        self.evalMove(board, self.depth)
+        return self.best_move
 
 def main():
     bot1 = Bot(color=True)
@@ -73,7 +77,7 @@ def main():
     print(game)
     
     for _ in range(20):
-        bot1.bestMove(game, bot1.depth)
+        bot1.evalMove(game, bot1.depth)
         if bot1.best_move is None:
             print("Game over!")
             break
@@ -81,7 +85,7 @@ def main():
         game.push(bot1.best_move)
         print(game)
         
-        bot2.bestMove(game, bot2.depth)
+        bot2.evalMove(game, bot2.depth)
         if bot2.best_move is None:
             print("Game over!")
             break

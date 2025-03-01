@@ -4,12 +4,14 @@ import chess
 import json
 import uuid
 from chess_ai import load_chess_model, predict_move
+from algorithm_bot import Bot
 
 app = Flask(__name__)
 CORS(app)
 
 games = {}
 model = load_chess_model('models/chessnet_model_2.pth')
+cat_fish = Bot
 
 class BrickFish:
     def __init__(self):
@@ -29,6 +31,11 @@ class BrickFish:
         move = predict_move(self.board.fen(), model)
         self.board.push(move)
         return self.board_state()
+    
+    def cat_bot_move(self):
+        move = cat_fish.bestMove(self.board)
+        self.board.push(move)
+        return self.board_state(self.board)
     
     def legal_moves(self, pos_start=None):
         if not pos_start:
@@ -82,6 +89,11 @@ def move_piece(id, move):
 @app.route('/botMove/<id>', methods=['GET'])
 def bot_move(id):
     return games[id].bot_move()
+
+@app.route('/catBotMove/<id>', methods=['GET'])
+def catbot_move(id):
+    return games[id].catbot_move()
+
 
 # if __name__ == "__main__":
 #     main()
