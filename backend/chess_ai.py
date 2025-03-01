@@ -39,7 +39,7 @@ class ChessNet(nn.Module):
         x = self.output_layer(x)
         return x
 
-def load_chess_model(model_path="models/chessnet_model_2.pth"):
+def load_chess_model(model_path="models/chessnet_model_3.pth"):
     model = ChessNet()
     state_dict = torch.load(model_path, map_location=torch.device('cpu'))
 
