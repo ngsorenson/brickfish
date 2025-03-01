@@ -128,6 +128,26 @@ const Home = () => {
             console.error('Error gettin bot move:', error);
         }
     }
+    async function askCatBotMove() {
+        try {
+            const response = await fetch(`http://localhost:5000/catBotMove/${gameId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            console.log(`data: ${data.boardState}`);
+            if (data.boardState) {
+                setBoardState(data.boardState);
+                localStorage.setItem('boardState', data.boardState);
+                getLegalMoves();
+                setToGo(toGo === 'w' ? 'b' : 'w');
+            }
+        } catch (error) {
+            console.error('Error gettin catBot move:', error);
+        }
+    }
 
 
 
