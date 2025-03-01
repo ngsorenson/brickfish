@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.use('/api/v1/game', gameRouter);
+app.use('/api/v1/', gameRouter);
 
 // Example of a route with a parameter
 app.get('/user/:id', (req, res) => {

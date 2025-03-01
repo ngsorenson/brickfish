@@ -1,3 +1,3 @@
-exports.createNewGame = async (req, res) => {
+exports.newGame = async (req, res) => {
     res.send('New game created');
 };

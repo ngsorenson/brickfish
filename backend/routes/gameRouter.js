@@ -4,5 +4,6 @@ const gameController = require('../controllers/gameController');
 
 // Routes for game logic
 router.get('/newGame', gameController.newGame);
+router.
 
 module.exports = router;
