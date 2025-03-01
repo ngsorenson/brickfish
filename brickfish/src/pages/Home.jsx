@@ -85,7 +85,7 @@ const Home = () => {
             if (data.board_state) {
                 setBoardState(data.board_state);
                 localStorage.setItem('boardState', data.board_state);
-                getLegalMoves();
+                askBotMove();
             } else {
                 console.log('Error: No board state returned');
             }
@@ -105,6 +105,27 @@ const Home = () => {
             if (legalMoves.length === 0) {
                 alert('Checkmate');
             }
+        }
+    }
+
+    async function askBotMove() {
+        try {
+            const response = await fetch(`http://localhost:5000/botMove/${gameId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            console.log(`data: ${data.boardState}`);
+            if (data.boardState) {
+                setBoardState(data.boardState);
+                localStorage.setItem('boardState', data.boardState);
+                getLegalMoves();
+                setToGo(toGo === 'w' ? 'b' : 'w');
+            }
+        } catch (error) {
+            console.error('Error gettin bot move:', error);
         }
     }
 
