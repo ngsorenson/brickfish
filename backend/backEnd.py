@@ -3,12 +3,13 @@ from flask_cors import CORS
 import chess
 import json
 import uuid
+from chess_ai import load_chess_model, predict_move
 
 app = Flask(__name__)
 CORS(app)
 
 games = {}
-
+model = load_chess_model('models/chessnet_model_1.pth')
 
 class BrickFish:
     def __init__(self):
@@ -25,6 +26,11 @@ class BrickFish:
             print("Illegal move")
             return False
 
+    def bot_move(self):
+        move = predict_move(self.board, model)
+        self.board.push(move)
+        return self.board_state()
+    
     def legal_moves(self, pos_start=None):
         if not pos_start:
             moves = [move.uci() for move in self.board.legal_moves]
