@@ -2,13 +2,12 @@ import '../App.css';
 import MainLayout from '../layout/MainLayout';
 import { Chessboard } from 'react-chessboard';
 import { useEffect, useState } from 'react';
-import { Chess } from 'chess.js';
 
 const Home = () => {
     const [gameId, setGameId] = useState(null);
     const [boardState, setBoardState] = useState('start');
     const [legalMoves, setLegalMoves] = useState([]);
-    const [chess] = useState(new Chess());
+    const [toGo, setToGo] = useState('w');
 
     useEffect(() => {
         let id = localStorage.getItem('ID');
@@ -41,6 +40,7 @@ const Home = () => {
             setBoardState(data.board_state);
             localStorage.setItem('ID', data.game_id);
             localStorage.setItem('boardState', data.board_state);
+            getLegalMoves();
 
         } catch (error) {
             console.error('Error starting new game:', error);
@@ -57,15 +57,55 @@ const Home = () => {
                 }
             });
             const data = await response.json();
-            localStorage.setItem('legalMoves', data.legal_moves);
-            console.log(data.legal_moves);
+            if (data.legal_moves) {
+                setLegalMoves(data.legal_moves);
+                localStorage.setItem('legalMoves', data.legal_moves);
+                console.log(data.legal_moves);
+                if (legalMoves.length === 0) {
+                    alert('Checkmate');
+                }
+            } else {
+                console.log('Error: No legal moves returned');
+            }
         } catch (error) {
             console.error('Error getting legal moves:', error);
         }
     }
 
-    function onClickPiece() {
-        console.log('Piece clicked');
+    async function makeMove(move) {
+        try {
+            const response = await fetch(`http://localhost:5000/movePiece/${gameId}/${move}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (data.board_state) {
+                setBoardState(data.board_state);
+                localStorage.setItem('boardState', data.board_state);
+                getLegalMoves();
+            } else {
+                console.log('Error: No board state returned');
+            }
+        } catch (error) {
+            console.error('Error making move:', error);
+        }
+    }
+
+    function onDrop(sourceSquare, targetSquare, piece) {
+        console.log('Piece clicked', sourceSquare, targetSquare, piece);
+        let move = sourceSquare + targetSquare;
+        console.log('Move:', move);
+        console.log('Legal Moves:', legalMoves);
+        if (legalMoves.includes(move)) {
+            makeMove(move);
+            if (legalMoves.length === 0) {
+                alert('Checkmate');
+            }
+        } else {
+            alert('Illegal move');
+        }
     }
 
     return (
@@ -79,7 +119,8 @@ const Home = () => {
                         </div>
                         <div className="col-2"></div>
                         <div className="col-6 chessboard-container">
-                            <Chessboard position={boardState} />
+                            <Chessboard position={boardState}
+                                onPieceDrop={onDrop} />
                         </div>
                         <div className="col-3"></div>
                     </div>
