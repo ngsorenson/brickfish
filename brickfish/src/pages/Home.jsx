@@ -166,7 +166,7 @@ const Home = () => {
                             <Chessboard position={boardState}
                                 onPieceDrop={onDrop} />
                         </div>
-                        <div className="col-3"></div>
+                        <div className="col-3"><h1>Brickfish</h1></div>
                     </div>
                 </div>
             </MainLayout>
