@@ -11,7 +11,7 @@ CORS(app)
 
 games = {}
 model = load_chess_model('models/chessnet_model_2.pth')
-cat_fish = Bot
+cat_fish = Bot()
 
 class BrickFish:
     def __init__(self):
@@ -95,7 +95,7 @@ def bot_move(id):
 
 @app.route('/catBotMove/<id>', methods=['GET'])
 def catbot_move(id):
-    return games[id].catbot_move()
+    return {"board_state" : games[id].cat_bot_move()}
 
 
 # if __name__ == "__main__":

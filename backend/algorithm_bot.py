@@ -1,7 +1,7 @@
 import chess
 
 class Bot:
-    def __init__(self, color=True, depth=6):
+    def __init__(self, color=False, depth=6):
         self.depth = depth
         self.best_move = None
         self.color = color  # True for White, False for Black
