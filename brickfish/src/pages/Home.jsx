@@ -166,7 +166,7 @@ const Home = () => {
                             <Chessboard position={boardState}
                                 onPieceDrop={onDrop} />
                         </div>
-                        <div className="col-3">GOOGLE ADS GO HERE</div>
+                        <div className="col-3"></div>
                     </div>
                 </div>
             </MainLayout>
