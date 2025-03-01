@@ -65,6 +65,15 @@ def legal_moves_with_piece(id, piece):
 def game_state(id):
     return games[id].board_state()
 
+@app.route('/movePiece/<id>/<move>', methods=['POST'])
+def move_piece(id, move):
+    # data = request.get_json()
+    # move = data[move]
+    if games[id].move_piece(move):
+        return games[id].board_state()
+    else:
+        return "Illegal move"
+
 # if __name__ == "__main__":
 #     main()
 
