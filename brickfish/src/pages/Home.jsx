@@ -62,7 +62,7 @@ const Home = () => {
                 setLegalMoves(data.legal_moves);
                 localStorage.setItem('legalMoves', data.legal_moves);
                 console.log(data.legal_moves);
-                if (legalMoves.length === 0) {
+                if (data.legal_moves.length === 0) {
                     alert('Checkmate');
                 }
             } else {
@@ -107,6 +107,8 @@ const Home = () => {
             }
         }
     }
+
+
 
     const whoToMove = toGo === 'w' ? 'White' : 'Black';
 
