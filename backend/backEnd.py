@@ -36,7 +36,7 @@ class BrickFish:
     def cat_bot_move(self):
         move = cat_fish.bestMove(self.board)
         self.board.push(move)
-        return self.board_state(self.board)
+        return self.board_state()
     
     def legal_moves(self, pos_start=None):
         if not pos_start:

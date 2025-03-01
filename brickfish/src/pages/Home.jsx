@@ -85,7 +85,7 @@ const Home = () => {
             if (data.board_state) {
                 setBoardState(data.board_state);
                 localStorage.setItem('boardState', data.board_state);
-                askBotMove();
+                askCatBotMove();
             } else {
                 console.log('Error: No board state returned');
             }
