@@ -41,6 +41,7 @@ const Home = () => {
             localStorage.setItem('ID', data.game_id);
             localStorage.setItem('boardState', data.board_state);
             getLegalMoves();
+            setToGo('w');
 
         } catch (error) {
             console.error('Error starting new game:', error);
@@ -100,29 +101,29 @@ const Home = () => {
         console.log('Legal Moves:', legalMoves);
         if (legalMoves.includes(move)) {
             makeMove(move);
+            setToGo(toGo === 'w' ? 'b' : 'w');
             if (legalMoves.length === 0) {
                 alert('Checkmate');
             }
-        } else {
-            alert('Illegal move');
         }
     }
+
+    const whoToMove = toGo === 'w' ? 'White' : 'Black';
 
     return (
         <>
             <MainLayout title="Brickfish Home">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-1 sidebar">
-                            Sidebar Content
+                        <div className="col-1 sidebar p-1" style={{ backgroundColor: 'grey' }}>
                             <button onClick={newGame}>New Game</button>
                         </div>
-                        <div className="col-2"></div>
+                        <div className="col-2">To move: {whoToMove}</div>
                         <div className="col-6 chessboard-container">
                             <Chessboard position={boardState}
                                 onPieceDrop={onDrop} />
                         </div>
-                        <div className="col-3"></div>
+                        <div className="col-3">GOOGLE ADS GO HERE</div>
                     </div>
                 </div>
             </MainLayout>
