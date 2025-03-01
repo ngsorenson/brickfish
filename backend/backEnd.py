@@ -26,7 +26,8 @@ class BrickFish:
             return False
 
     def bot_move(self):
-        move = predict_move(self.board.fen(), model)
+        move_uci = predict_move(self.board.fen(), model)
+        move = chess.Move.from_uci(move_uci)
         self.board.push(move)
         return self.board_state()
     
@@ -40,7 +41,7 @@ class BrickFish:
         return json.dumps({"legal_moves": moves}, indent=4)
     
     def board_state(self):
-        return  repr(self.board).split("'").pop(1).split(' ').pop(0)
+        return repr(self.board).split("'").pop(1).split(' ').pop(0)
     
 # def main():
 #     game = BrickFish()
@@ -81,7 +82,9 @@ def move_piece(id, move):
 
 @app.route('/botMove/<id>', methods=['GET'])
 def bot_move(id):
-    return games[id].bot_move()
+    print(games[id].bot_move())
+    print(games[id].board_state())
+    return {'board_state': games[id].board_state()}
 
 # if __name__ == "__main__":
 #     main()

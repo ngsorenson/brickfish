@@ -28,9 +28,9 @@ class ResidualBlock(nn.Module):
 class ChessNet(nn.Module):
     def __init__(self, hidden_layers=4, hidden_size=200):
         super(ChessNet, self).__init__()
-        self.input_layer = nn.Conv2d(6, hidden_size, 3, stride=1, padding=1)  # Revert to 6 input channels
+        self.input_layer = nn.Conv2d(6, hidden_size, 3, stride=1, padding=1)  # Change to 6 input channels
         self.residual_blocks = nn.Sequential(*[ResidualBlock(hidden_size) for _ in range(hidden_layers)])
-        self.output_layer = nn.Conv2d(hidden_size, 2, 3, stride=1, padding=1)  # Revert to 2 output channels
+        self.output_layer = nn.Conv2d(hidden_size, 2, 3, stride=1, padding=1)  # Change to 2 output channels
 
     def forward(self, x):
         x = self.input_layer(x)
@@ -38,7 +38,6 @@ class ChessNet(nn.Module):
         x = self.residual_blocks(x)
         x = self.output_layer(x)
         return x
-
 
 def load_chess_model(model_path="models/chessnet_model_2.pth"):
     model = ChessNet()
@@ -56,11 +55,11 @@ def load_chess_model(model_path="models/chessnet_model_2.pth"):
     return model
 
 def fen_to_tensor(fen):
-    """ Convert a FEN string to a 12-channel tensor representation """
+    """ Convert a FEN string to a 6-channel tensor representation """
     board = chess.Board(fen)
-    piece_map = {'P': 0, 'N': 1, 'B': 2, 'R': 3, 'Q': 4, 'K': 5, 'p': 6, 'n': 7, 'b': 8, 'r': 9, 'q': 10, 'k': 11}
+    piece_map = {'P': 0, 'N': 1, 'B': 2, 'R': 3, 'Q': 4, 'K': 5, 'p': 0, 'n': 1, 'b': 2, 'r': 3, 'q': 4, 'k': 5}
     
-    board_matrix = torch.zeros((12, 8, 8), dtype=torch.float32)
+    board_matrix = torch.zeros((6, 8, 8), dtype=torch.float32)
     
     for square in chess.SQUARES:
         piece = board.piece_at(square)
@@ -76,7 +75,7 @@ def predict_move(fen, model):
     x = fen_to_tensor(fen)
     
     with torch.no_grad():
-        move_scores = model(x).numpy()  # Convert to NumPy
+        move_scores = model(x).squeeze().numpy()  # Convert to NumPy and remove batch dimension
     
     legal_moves = list(board.legal_moves)
     
@@ -84,10 +83,9 @@ def predict_move(fen, model):
     for move in legal_moves:
         move_uci = move.uci()
         from_sq, to_sq = move.from_square, move.to_square
-        row_from, col_from = divmod(from_sq, 8)
         row_to, col_to = divmod(to_sq, 8)
         
-        move_values[move_uci] = move_scores[row_to, col_to]  # Use predicted move score
+        move_values[move_uci] = move_scores[0, row_to, col_to]  # Use predicted move score
 
     best_move = max(move_values, key=move_values.get)
     return best_move
