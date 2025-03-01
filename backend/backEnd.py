@@ -79,6 +79,10 @@ def move_piece(id, move):
     else:
         return {"board_state": games[id].board_state()}
 
+@app.route('/botMove/<id>', methods=['POST'])
+def bot_move(id):
+    return games[id].bot_move()
+
 # if __name__ == "__main__":
 #     main()
 
