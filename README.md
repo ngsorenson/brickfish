@@ -50,3 +50,5 @@
     npm run dev
     ```
 
+8. Access the server in your browser, default is localhost:5173
+
