@@ -35,7 +35,7 @@ class BrickFish:
         return json.dumps({"legal_moves": moves}, indent=4)
     
     def board_state(self):
-        return json.dumps({"board state" : repr(self.board).split("'").pop(1).split(' ').pop(0)}, indent=4)
+        return  repr(self.board).split("'").pop(1).split(' ').pop(0)
     
 # def main():
 #     game = BrickFish()
