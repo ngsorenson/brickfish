@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const gameRouter = require('./routes/gameRouter');
 const app = express();
 const port = 3000;
 
@@ -9,10 +10,8 @@ app.use(cors());
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Basic route
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// routes
+app.use('/api/v1/game', gameRouter);
 
 // Example of a route with a parameter
 app.get('/user/:id', (req, res) => {
