@@ -22,7 +22,6 @@ class BrickFish:
             self.board.push(move)
             return True
         else:
-            print("Illegal move")
             return False
 
     def legal_moves(self, pos_start=None):
@@ -70,9 +69,9 @@ def move_piece(id, move):
     # data = request.get_json()
     # move = data[move]
     if games[id].move_piece(move):
-        return games[id].board_state()
+        return {"board_state": games[id].board_state()}
     else:
-        return "Illegal move"
+        return {"board_state": games[id].board_state()}
 
 # if __name__ == "__main__":
 #     main()
