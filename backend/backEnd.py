@@ -26,7 +26,7 @@ class BrickFish:
             return False
 
     def bot_move(self):
-        move = predict_move(self.board, model)
+        move = predict_move(self.board.fen(), model)
         self.board.push(move)
         return self.board_state()
     
@@ -79,7 +79,7 @@ def move_piece(id, move):
     else:
         return {"board_state": games[id].board_state()}
 
-@app.route('/botMove/<id>', methods=['POST'])
+@app.route('/botMove/<id>', methods=['GET'])
 def bot_move(id):
     return games[id].bot_move()
 
