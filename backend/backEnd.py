@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 games = {}
-model = load_chess_model('models/chessnet_model_1.pth')
+model = load_chess_model('models/chessnet_model_2.pth')
 
 class BrickFish:
     def __init__(self):
