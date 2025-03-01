@@ -4,6 +4,8 @@
 - [Node.js](https://nodejs.org/en/download/)
 - [React Chessboard](https://www.npmjs.com/package/react-chessboard)
 - [python-chess](https://python-chess.readthedocs.io/en/latest/)
+- [Vite](https://vite.dev/guide/)
+- [React](https://react.dev/)
 - Python libraries besides standard as found in /brickfish/backend/requirements.txt
 - torch
 - pandas
