@@ -1,3 +1,6 @@
+#About
+Brickfish was created during USU Hackathon 2025. A React frontend and a Python backend allow the user to play chess vs 3 different AI models we trained on various partitions of a dataset of roughly 6 million games or vs Catfish (CatBot) which is a more traditional algorithm-based approach.
+
 # Dependencies
 - [Python](https://www.python.org/downloads/)
 - [pip](https://pip.pypa.io/en/stable/installation/)
@@ -55,5 +58,5 @@
     npm run dev
     ```
 
-8. Access the server in your browser, default is http://localhost:5173/
+8. Access the server in your browser, default is http://localhost:5173/, or you can just type o + enter in the terminal you ran the development server and Vite will open it in your default browser.
 
