@@ -1,4 +1,4 @@
-#About
+# About
 Brickfish was created during USU Hackathon 2025. A React frontend and a Python backend allow the user to play chess vs 3 different AI models we trained on various partitions of a dataset of roughly 6 million games or vs Catfish (CatBot) which is a more traditional algorithm-based approach.
 
 # Dependencies
